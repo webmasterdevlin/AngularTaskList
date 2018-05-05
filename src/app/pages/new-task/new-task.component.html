@@ -1,0 +1,16 @@
+
+<div class="container">
+  <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+
+    <mat-form-field class="example-form"  fxLayoutGap="10px">
+    <input [(ngModel)]="TaskInput" (keyup.enter)="picker.open()" #input matInput placeholder="Edit your task and choose a date" matTextareaAutosize matAutosizeMinRows="2"
+              matAutosizeMaxRows="5" />
+    </mat-form-field>
+      <mat-form-field class="example-form"  fxLayoutGap="10px">
+      <input (focus)="picker.open()" #calendar matInput [matDatepicker]="picker" placeholder="Click the calendar  choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi="true" #picker></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button color="primary" #button (click)="onCreate(input.value, calendar.value)">Create</button>
+  </div>
+</div>

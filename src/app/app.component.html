@@ -1,0 +1,20 @@
+<mat-toolbar color="primary"  fxLayoutAlign="space-between center" >
+  <div>
+  Devlin's Task List
+  </div>
+  <div class="nav-buttons" >
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/home">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+<router-outlet></router-outlet>
+<button mat-fab routerLink="/new-task">
+  <mat-icon>add</mat-icon>
+</button>
