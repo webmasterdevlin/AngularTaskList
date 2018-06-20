@@ -1,4 +1,4 @@
-<mat-card *ngFor="let task of TaskList$ | async" fxLayoutAlign="space-between center" fxLayoutGap="20px" @fade>
+<mat-card *ngFor="let task of TaskList" fxLayoutAlign="space-between center" fxLayoutGap="20px" @fade>
   <span>
     {{task.title}}
   </span>
@@ -6,10 +6,10 @@
     {{task.isDone | isDone}}
   </span>
   <span>
-    {{task.deadLine | date:"MMM/dd/yyyy"}}
+    {{task.daysRemaining}}
   </span>
   <div fxLayoutGap="10px" fxLayout="column">
-    <button [routerLink]="['/edit-task', task.$key]" mat-raised-button color="primary">
+    <button [routerLink]="['/edit-task', task.key]" mat-raised-button color="primary">
       Edit
     </button>
     <button mat-raised-button (click)="deleteTask(task)" color="warn">

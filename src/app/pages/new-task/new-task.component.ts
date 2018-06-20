@@ -1,13 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 
 import { MatSnackBar } from "@angular/material";
-import {
-  AngularFireDatabase,
-  FirebaseListObservable
-} from "angularfire2/database-deprecated";
+
 import {Task} from '../../models/task';
 import {LocalTaskService} from '../../services/local-task.service';
-import {FirebaseTaskService} from '../../services/firebase-task.service';
 
 @Component({
   selector: "app-new-task",
@@ -16,13 +12,10 @@ import {FirebaseTaskService} from '../../services/firebase-task.service';
 })
 export class NewTaskComponent {
   TaskList: Task[] = [];
-  TaskList$: FirebaseListObservable<any[]>;
   TaskInput: string;
 
   constructor(
     private _localTaskService: LocalTaskService,
-    private _fbTaskService: FirebaseTaskService,
-    private _afFb: AngularFireDatabase,
     private _snackBar: MatSnackBar
   ) {}
 
@@ -30,10 +23,9 @@ export class NewTaskComponent {
     let task = new Task();
     task.title = input;
     task.isDone = false;
-    task.deadLine = calendar as Date;
+    task.daysRemaining = calendar as Date;
 
-    // this._localTaskService.postTask(task).subscribe();
-    this._fbTaskService.postTask(task);
+    this._localTaskService.postTask(task).subscribe();
     this.openSnackBar();
     this.TaskInput = "";
   }

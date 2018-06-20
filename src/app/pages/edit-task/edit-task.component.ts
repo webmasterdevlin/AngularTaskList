@@ -1,10 +1,8 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { LocalTaskService } from "../../services/local-task.service";
 import { Task } from "../../models/task";
 import { MatSnackBar } from "@angular/material";
-import { Subscription } from "rxjs/Subscription";
-import { FirebaseTaskService } from "../../services/firebase-task.service";
 
 @Component({
   selector: "app-edit-task",
@@ -23,7 +21,6 @@ export class EditTaskComponent implements OnInit {
   constructor(
     private _localTaskService: LocalTaskService,
     private _activatedRoute: ActivatedRoute,
-    private _fbTaskService: FirebaseTaskService,
     private _snackBar: MatSnackBar
   ) {}
 
@@ -34,11 +31,10 @@ export class EditTaskComponent implements OnInit {
   }
 
   getTask(id: string) {
-    //   this._localTaskService.getTask(id).subscribe(data => {
-    this._fbTaskService.getTask(id).subscribe(data => {
+      this._localTaskService.getTask(id).subscribe(data => {
       this.Task = data;
       this.checked = this.Task.isDone;
-      this.EditCalendar = this.Task.deadLine;
+      // this.EditCalendar = this.Task.daysRemaining;
     });
   }
 
@@ -47,16 +43,15 @@ export class EditTaskComponent implements OnInit {
   }
 
   onUpdateTask() {
-    this.Task.deadLine = this.EditCalendar;
+    this.Task.daysRemaining = this.EditCalendar;
 
     let task = new Task();
-    // task.id = this.Task.id; // Dev Environment
+    task.id = this.Task.id; // Dev Environment
     task.title = this.Task.title;
     task.isDone = this.checked;
-    task.deadLine = this.Task.deadLine;
+    // task.daysRemaining = this.Task.daysRemaining;
 
-    // this._localTaskService.putTask(task).subscribe(); // Dev Environment
-    this._fbTaskService.putTask(task);
+    this._localTaskService.putTask(task).subscribe(); // Dev Environment
     this.disabledButton = true;
     this.openSnackBar();
   }

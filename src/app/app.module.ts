@@ -13,20 +13,8 @@ import { EditTaskComponent } from "./pages/edit-task/edit-task.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HomeComponent } from "./pages/home/home.component";
 import { IsDonePipe } from "./pipes/is-done.pipe";
-
-import { AngularFireDatabaseModule } from "angularfire2/database-deprecated";
-import { AngularFireModule } from "angularfire2";
-import { FirebaseTaskService } from "./services/firebase-task.service";
 import { MatComponentsModule } from "./mat-components/mat-components.module";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAb-QD_jDPPA4mM0a8L_i7dp2sLbuz_YBI",
-  authDomain: "tasklist-5af1a.firebaseapp.com",
-  databaseURL: "https://tasklist-5af1a.firebaseio.com",
-  projectId: "tasklist-5af1a",
-  storageBucket: "tasklist-5af1a.appspot.com",
-  messagingSenderId: "381283576421"
-};
 
 @NgModule({
   declarations: [
@@ -45,11 +33,9 @@ const firebaseConfig = {
     ReactiveFormsModule,
     FlexLayoutModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule,
     MatComponentsModule
   ],
-  providers: [LocalTaskService, FirebaseTaskService],
+  providers: [LocalTaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
