@@ -11,7 +11,6 @@ import {LocalTaskService} from '../../services/local-task.service';
   styleUrls: ["./new-task.component.css"]
 })
 export class NewTaskComponent {
-  TaskList: Task[] = [];
   TaskInput: string;
 
   constructor(
@@ -23,7 +22,7 @@ export class NewTaskComponent {
     let task = new Task();
     task.title = input;
     task.isDone = false;
-    task.daysRemaining = calendar as Date;
+    task.deadLine = calendar as Date;
 
     this._localTaskService.postTask(task).subscribe();
     this.openSnackBar();

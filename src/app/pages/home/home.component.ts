@@ -2,7 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import { LocalTaskService } from "../../services/local-task.service";
 import { Task } from "../../models/task";
 import "rxjs/add/operator/do";
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from "@angular/animations";
 
 @Component({
   selector: "app-home",
@@ -17,21 +23,16 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   ]
 })
 export class HomeComponent implements OnInit {
-  TaskList: Task[] = [];
+  taskList$: any;
 
-  constructor(
-    private _localTaskService: LocalTaskService,
-  ) {}
+  constructor(private _localTaskService: LocalTaskService) {}
 
   ngOnInit() {
     this.getTasks();
   }
 
   getTasks() {
-    this._localTaskService.getTasks().subscribe(data => {
-      console.log("Data from local server: ", data);
-      this.TaskList = data;
-    });
+    this.taskList$ = this._localTaskService.getTasks();
   }
 
   deleteTask(task: Task) {

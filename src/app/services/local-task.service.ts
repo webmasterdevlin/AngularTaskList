@@ -8,7 +8,7 @@ import "rxjs/add/operator/map";
 
 @Injectable()
 export class LocalTaskService {
-  private _url = "http://localhost:5000/api/tasks/";
+  private _url = "https://localhost:5001/api/tasks/";
 
   constructor(private _httpClient: HttpClient) {}
 

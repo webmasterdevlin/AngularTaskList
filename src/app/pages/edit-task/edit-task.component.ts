@@ -1,15 +1,16 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { LocalTaskService } from "../../services/local-task.service";
 import { Task } from "../../models/task";
 import { MatSnackBar } from "@angular/material";
+import {ISubscription} from "rxjs-compat/Subscription";
 
 @Component({
   selector: "app-edit-task",
   templateUrl: "./edit-task.component.html",
   styleUrls: ["./edit-task.component.css"]
 })
-export class EditTaskComponent implements OnInit {
+export class EditTaskComponent implements OnInit, OnDestroy {
   private _router: Router;
   color = "accent";
   checked: boolean;
@@ -17,6 +18,7 @@ export class EditTaskComponent implements OnInit {
   Task: Task;
   EditCalendar: Date;
   disabledButton = false;
+  sub: ISubscription;
 
   constructor(
     private _localTaskService: LocalTaskService,
@@ -31,10 +33,10 @@ export class EditTaskComponent implements OnInit {
   }
 
   getTask(id: string) {
-      this._localTaskService.getTask(id).subscribe(data => {
+      this.sub = this._localTaskService.getTask(id).subscribe(data => {
       this.Task = data;
       this.checked = this.Task.isDone;
-      // this.EditCalendar = this.Task.daysRemaining;
+      this.EditCalendar = this.Task.deadLine;
     });
   }
 
@@ -43,13 +45,13 @@ export class EditTaskComponent implements OnInit {
   }
 
   onUpdateTask() {
-    this.Task.daysRemaining = this.EditCalendar;
 
     let task = new Task();
     task.id = this.Task.id; // Dev Environment
     task.title = this.Task.title;
     task.isDone = this.checked;
-    // task.daysRemaining = this.Task.daysRemaining;
+    task.deadLine = this.EditCalendar;
+    task.daysRemaining = this.Task.daysRemaining;
 
     this._localTaskService.putTask(task).subscribe(); // Dev Environment
     this.disabledButton = true;
@@ -68,5 +70,10 @@ export class EditTaskComponent implements OnInit {
     this._snackBar.open(`${this.Task.title} has been updated`, "OK", {
       duration: 5000
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+    console.log("Destroyed");
   }
 }
