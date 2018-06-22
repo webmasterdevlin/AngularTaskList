@@ -1,0 +1,7 @@
+<div class="row">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" >
+    <label for="title">Title</label>
+    <input formControlName="title" type="text" id="title">
+    <button type="submit" >Submit</button>
+  </form>
+</div>

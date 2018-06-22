@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HomeComponent } from "./pages/home/home.component";
 import { IsDonePipe } from "./pipes/is-done.pipe";
 import { MatComponentsModule } from "./mat-components/mat-components.module";
+import { TestRestComponent } from './pages/test-rest/test-rest.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MatComponentsModule } from "./mat-components/mat-components.module";
     NewTaskComponent,
     EditTaskComponent,
     HomeComponent,
-    IsDonePipe
+    IsDonePipe,
+    TestRestComponent
   ],
   imports: [
     BrowserModule,
